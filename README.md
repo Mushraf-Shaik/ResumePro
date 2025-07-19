@@ -75,12 +75,22 @@ cd backend
 pip install -r requirements.txt
 ```
 
-3. **Run the application**
+3. **Configure environment variables**
+```bash
+# Copy the example environment file
+cp .env.example .env
+
+# Edit .env file and add your Gemini API key
+# Get your API key from: https://makersuite.google.com/app/apikey
+GEMINI_API_KEY=your_actual_api_key_here
+```
+
+4. **Run the application**
 ```bash
 python app.py
 ```
 
-4. **Access the application**
+5. **Access the application**
 Open your browser and navigate to `http://localhost:5000`
 
 ### **Usage**
@@ -132,6 +142,30 @@ Open your browser and navigate to `http://localhost:5000`
 - **Real-time Feedback**: Instant visual feedback during analysis
 - **Progressive Enhancement**: Works without JavaScript (basic functionality)
 - **Cross-browser Compatibility**: Supports all modern browsers
+
+## 🔒 Security & Configuration
+
+### **Environment Variables**
+The application uses environment variables for secure configuration:
+
+- **GEMINI_API_KEY**: Your Google Gemini API key (required)
+- **GEMINI_API_URL**: Gemini API endpoint URL
+- **FLASK_DEBUG**: Enable/disable debug mode
+- **SECRET_KEY**: Flask secret key for session security
+- **MAX_CONTENT_LENGTH**: Maximum file upload size (bytes)
+- **UPLOAD_FOLDER**: Directory for temporary file storage
+
+### **API Key Setup**
+1. Visit [Google AI Studio](https://makersuite.google.com/app/apikey)
+2. Create a new API key
+3. Copy the key to your `.env` file
+4. Never commit the `.env` file to version control
+
+### **Production Deployment**
+- Change the `SECRET_KEY` to a strong, random value
+- Set `FLASK_DEBUG=False` in production
+- Use environment-specific `.env` files
+- Consider using a secrets management service
 
 ## 📈 Future Enhancements
 

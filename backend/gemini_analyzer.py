@@ -20,12 +20,13 @@ class GeminiAnalyzer:
         load_dotenv()
         
         # Use provided API key or get from environment
-        self.api_key = api_key or os.getenv("GEMINI_API_KEY", "AIzaSyCPxs9vFYMKxUCr91dplmwR495ipFxUzj8")
+        self.api_key = api_key or os.getenv("GEMINI_API_KEY")
         
         if not self.api_key:
-            logger.warning("No Gemini API key provided. Gemini analysis will not work.")
+            logger.warning("No Gemini API key provided. Please set GEMINI_API_KEY in .env file.")
+            raise ValueError("GEMINI_API_KEY is required. Please check your .env file.")
         
-        self.api_url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent"
+        self.api_url = os.getenv("GEMINI_API_URL", "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent")
     
     def analyze(self, resume_text, job_description):
         """

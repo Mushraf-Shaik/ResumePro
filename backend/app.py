@@ -4,8 +4,12 @@ import os
 import logging
 import json
 from werkzeug.utils import secure_filename
+from dotenv import load_dotenv
 from analyzer import ResumeAnalyzer
 from gemini_analyzer import GeminiAnalyzer
+
+# Load environment variables
+load_dotenv()
 
 # Configure logging
 logging.basicConfig(level=logging.INFO, 
@@ -18,14 +22,18 @@ app = Flask(__name__,
            template_folder='templates')
 
 # Configure upload settings
-UPLOAD_FOLDER = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'uploads')
+UPLOAD_FOLDER = os.path.join(os.path.dirname(os.path.abspath(__file__)), 
+                            os.getenv('UPLOAD_FOLDER', 'uploads'))
 ALLOWED_EXTENSIONS = {'pdf', 'doc', 'docx', 'txt'}
 
 # Create upload folder if it doesn't exist
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
+# App configuration
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
-app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # 16MB max upload size
+app.config['MAX_CONTENT_LENGTH'] = int(os.getenv('MAX_CONTENT_LENGTH', 16777216))  # 16MB default
+app.config['SECRET_KEY'] = os.getenv('SECRET_KEY', 'dev-secret-key-change-in-production')
+app.config['DEBUG'] = os.getenv('FLASK_DEBUG', 'True').lower() == 'true'
 
 # Enable CORS
 CORS(app)
