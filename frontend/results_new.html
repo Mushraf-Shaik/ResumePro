@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resume Analysis Results - ResumePro</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#eff6ff',
+                            100: '#dbeafe',
+                            200: '#bfdbfe',
+                            300: '#93c5fd',
+                            400: '#60a5fa',
+                            500: '#3b82f6',
+                            600: '#2563eb',
+                            700: '#1d4ed8',
+                            800: '#1e40af',
+                            900: '#1e3a8a',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        .fade-in {
+            animation: fadeIn 0.6s ease-in;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .slide-up {
+            animation: slideUp 0.8s ease-out;
+        }
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(40px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .progress-ring {
+            transition: stroke-dashoffset 0.8s ease-in-out;
+        }
+        .score-excellent { color: #10b981; }
+        .score-good { color: #3b82f6; }
+        .score-fair { color: #f59e0b; }
+        .score-poor { color: #ef4444; }
+        .gradient-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+    </style>
+</head>
+<body class="bg-gray-50 font-sans">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-sm border-b border-gray-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center space-x-4">
+                    <div class="flex items-center space-x-2">
+                        <div class="w-8 h-8 bg-primary-600 rounded-lg flex items-center justify-center">
+                            <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                            </svg>
+                        </div>
+                        <h1 class="text-xl font-bold text-gray-900">ResumePro</h1>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-6">
+                    <a href="landing.html" class="text-gray-600 hover:text-gray-900 font-medium">Home</a>
+                    <a href="upload.html" class="bg-primary-600 text-white px-4 py-2 rounded-lg font-medium hover:bg-primary-700 transition-colors">New Analysis</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <!-- Header Section -->
+        <div class="mb-8 fade-in">
+            <div class="text-center mb-8">
+                <h1 class="text-4xl font-bold text-gray-900 mb-4">Resume Analysis Complete</h1>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                    Your resume has been analyzed using our advanced ATS simulation. Here's how it performs against the job requirements.
+                </p>
+            </div>
+        </div>
+
+        <!-- Overall Score Card -->
+        <div class="mb-8 slide-up">
+            <div class="bg-white rounded-2xl shadow-lg border border-gray-200 overflow-hidden">
+                <div class="gradient-bg px-8 py-6">
+                    <div class="flex items-center justify-between text-white">
+                        <div>
+                            <h2 class="text-2xl font-bold mb-2">Overall ATS Score</h2>
+                            <p class="text-blue-100">Based on comprehensive analysis</p>
+                        </div>
+                        <div class="text-right">
+                            <div class="relative w-24 h-24">
+                                <svg class="w-24 h-24 transform -rotate-90" viewBox="0 0 100 100">
+                                    <circle cx="50" cy="50" r="40" stroke="rgba(255,255,255,0.2)" stroke-width="8" fill="none"/>
+                                    <circle id="score-circle" cx="50" cy="50" r="40" stroke="white" stroke-width="8" fill="none" 
+                                            stroke-dasharray="251.2" stroke-dashoffset="251.2" class="progress-ring"/>
+                                </svg>
+                                <div class="absolute inset-0 flex items-center justify-center">
+                                    <span id="overall-score" class="text-3xl font-bold text-white">--</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="p-8">
+                    <div id="score-interpretation" class="text-center">
+                        <p class="text-lg font-semibold text-gray-900 mb-2">Analyzing your resume...</p>
+                        <p class="text-gray-600">Please wait while we process the results.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Analysis Breakdown -->
+        <div class="grid lg:grid-cols-2 gap-8 mb-8">
+            <!-- ATS Compatibility -->
+            <div class="bg-white rounded-xl shadow-lg border border-gray-200 p-6 slide-up">
+                <div class="flex items-center mb-6">
+                    <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mr-4">
+                        <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-bold text-gray-900">ATS Compatibility</h3>
+                        <p class="text-gray-600">How well ATS systems can parse your resume</p>
+                    </div>
+                </div>
+                <div class="mb-4">
+                    <div class="flex justify-between items-center mb-2">
+                        <span class="text-sm font-medium text-gray-700">Parsability Score</span>
+                        <span id="ats-score" class="text-sm font-bold text-gray-900">--/100</span>
+                    </div>
+                    <div class="w-full bg-gray-200 rounded-full h-3">
+                        <div id="ats-progress" class="bg-green-500 h-3 rounded-full transition-all duration-1000" style="width: 0%"></div>
+                    </div>
+                </div>
+                <div id="ats-details" class="text-sm text-gray-600">
+                    <p>Analyzing document structure and formatting...</p>
+                </div>
+            </div>
+
+            <!-- Keyword Matching -->
+            <div class="bg-white rounded-xl shadow-lg border border-gray-200 p-6 slide-up">
+                <div class="flex items-center mb-6">
+                    <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mr-4">
+                        <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                        </svg>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-bold text-gray-900">Keyword Matching</h3>
+                        <p class="text-gray-600">Alignment with job requirements</p>
+                    </div>
+                </div>
+                <div class="mb-4">
+                    <div class="flex justify-between items-center mb-2">
+                        <span class="text-sm font-medium text-gray-700">Match Score</span>
+                        <span id="keyword-score" class="text-sm font-bold text-gray-900">--/100</span>
+                    </div>
+                    <div class="w-full bg-gray-200 rounded-full h-3">
+                        <div id="keyword-progress" class="bg-blue-500 h-3 rounded-full transition-all duration-1000" style="width: 0%"></div>
+                    </div>
+                </div>
+                <div id="keyword-details" class="text-sm text-gray-600">
+                    <p>Analyzing keyword alignment...</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Skills Analysis -->
+        <div class="bg-white rounded-xl shadow-lg border border-gray-200 p-8 mb-8 slide-up">
+            <h3 class="text-2xl font-bold text-gray-900 mb-6">Skills Analysis</h3>
+            <div class="grid md:grid-cols-2 gap-8">
+                <div>
+                    <h4 class="text-lg font-semibold text-green-700 mb-4 flex items-center">
+                        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                        </svg>
+                        Matched Skills
+                    </h4>
+                    <div id="matched-skills" class="flex flex-wrap gap-2">
+                        <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-green-100 text-green-800">
+                            Loading...
+                        </span>
+                    </div>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold text-red-700 mb-4 flex items-center">
+                        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                        </svg>
+                        Missing Skills
+                    </h4>
+                    <div id="missing-skills" class="flex flex-wrap gap-2">
+                        <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-red-100 text-red-800">
+                            Loading...
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Experience & Education -->
+        <div class="grid lg:grid-cols-2 gap-8 mb-8">
+            <div class="bg-white rounded-xl shadow-lg border border-gray-200 p-6 slide-up">
+                <h3 class="text-xl font-bold text-gray-900 mb-4">Experience Match</h3>
+                <div class="mb-4">
+                    <div class="flex justify-between items-center mb-2">
+                        <span class="text-sm font-medium text-gray-700">Relevance Score</span>
+                        <span id="experience-score" class="text-sm font-bold text-gray-900">--/100</span>
+                    </div>
+                    <div class="w-full bg-gray-200 rounded-full h-3">
+                        <div id="experience-progress" class="bg-purple-500 h-3 rounded-full transition-all duration-1000" style="width: 0%"></div>
+                    </div>
+                </div>
+                <div id="experience-details" class="text-sm text-gray-600">
+                    <p>Analyzing work experience relevance...</p>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-xl shadow-lg border border-gray-200 p-6 slide-up">
+                <h3 class="text-xl font-bold text-gray-900 mb-4">Education Match</h3>
+                <div class="mb-4">
+                    <div class="flex justify-between items-center mb-2">
+                        <span class="text-sm font-medium text-gray-700">Alignment Score</span>
+                        <span id="education-score" class="text-sm font-bold text-gray-900">--/100</span>
+                    </div>
+                    <div class="w-full bg-gray-200 rounded-full h-3">
+                        <div id="education-progress" class="bg-indigo-500 h-3 rounded-full transition-all duration-1000" style="width: 0%"></div>
+                    </div>
+                </div>
+                <div id="education-details" class="text-sm text-gray-600">
+                    <p>Analyzing educational background...</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Improvement Suggestions -->
+        <div class="bg-white rounded-xl shadow-lg border border-gray-200 p-8 mb-8 slide-up">
+            <h3 class="text-2xl font-bold text-gray-900 mb-6">Improvement Suggestions</h3>
+            <div id="suggestions-list" class="space-y-4">
+                <div class="flex items-start space-x-3">
+                    <div class="w-6 h-6 bg-yellow-100 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                        <svg class="w-4 h-4 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                    </div>
+                    <p class="text-gray-600">Loading personalized suggestions...</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="text-center space-x-4">
+            <button onclick="window.location.href='upload.html'" 
+                    class="bg-primary-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-primary-700 transition-colors">
+                Analyze Another Resume
+            </button>
+            <button onclick="window.print()" 
+                    class="bg-gray-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-gray-700 transition-colors">
+                Download Report
+            </button>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12 mt-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center">
+                <div class="flex items-center justify-center space-x-2 mb-4">
+                    <div class="w-8 h-8 bg-primary-600 rounded-lg flex items-center justify-center">
+                        <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                        </svg>
+                    </div>
+                    <span class="text-xl font-bold">ResumePro</span>
+                </div>
+                <p class="text-gray-400">© 2024 ResumePro. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/results.js"></script>
+</body>
+</html>

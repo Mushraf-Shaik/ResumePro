@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <title>Upload Resume - ResumePro</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📄</text></svg>">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              'inter': ['Inter', 'sans-serif'],
+            },
+            colors: {
+              'primary': {
+                50: '#eff6ff',
+                100: '#dbeafe',
+                500: '#3b82f6',
+                600: '#2563eb',
+                700: '#1d4ed8',
+                900: '#1e3a8a'
+              }
+            },
+            animation: {
+              'fade-in': 'fadeIn 0.6s ease-in-out',
+              'slide-up': 'slideUp 0.6s ease-out',
+              'pulse-slow': 'pulse 2s infinite',
+            },
+            keyframes: {
+              fadeIn: {
+                '0%': { opacity: '0' },
+                '100%': { opacity: '1' },
+              },
+              slideUp: {
+                '0%': { transform: 'translateY(20px)', opacity: '0' },
+                '100%': { transform: 'translateY(0)', opacity: '1' },
+              }
+            }
+          }
+        }
+      }
+    </script>
+    <script src="js/upload.js" defer></script>
+  </head>
+  <body class="font-inter bg-gray-50 min-h-screen">
+    <!-- Navigation -->
+    <nav class="bg-white border-b border-gray-200 sticky top-0 z-50">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between items-center h-16">
+          <div class="flex items-center space-x-3">
+            <a href="landing.html" class="flex items-center space-x-3">
+              <div class="w-8 h-8 bg-gradient-to-r from-primary-500 to-primary-700 rounded-lg flex items-center justify-center">
+                <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                </svg>
+              </div>
+              <span class="text-xl font-bold text-gray-900">ResumePro</span>
+            </a>
+          </div>
+          
+          <div class="flex items-center space-x-4">
+            <a href="landing.html" class="text-gray-600 hover:text-primary-600 font-medium transition-colors">
+              <svg class="w-5 h-5 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+              </svg>
+              Back to Home
+            </a>
+            <button class="text-gray-600 hover:text-primary-600 font-medium transition-colors">Help</button>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <!-- Header -->
+      <div class="text-center mb-12 animate-fade-in">
+        <h1 class="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+          Upload Your Resume
+        </h1>
+        <p class="text-xl text-gray-600 max-w-2xl mx-auto">
+          Get instant AI-powered analysis of your resume. Upload your file or paste the content directly.
+        </p>
+      </div>
+
+      <!-- Upload Section -->
+      <div class="bg-white rounded-2xl shadow-lg border border-gray-200 overflow-hidden animate-slide-up">
+        <!-- Progress Steps -->
+        <div class="bg-gray-50 px-8 py-4 border-b border-gray-200">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center space-x-4">
+              <div class="flex items-center space-x-2">
+                <div class="w-8 h-8 bg-primary-600 text-white rounded-full flex items-center justify-center text-sm font-semibold">1</div>
+                <span class="text-sm font-medium text-gray-900">Upload Resume</span>
+              </div>
+              <div class="w-8 h-px bg-gray-300"></div>
+              <div class="flex items-center space-x-2">
+                <div class="w-8 h-8 bg-gray-300 text-gray-500 rounded-full flex items-center justify-center text-sm font-semibold">2</div>
+                <span class="text-sm font-medium text-gray-500">AI Analysis</span>
+              </div>
+              <div class="w-8 h-px bg-gray-300"></div>
+              <div class="flex items-center space-x-2">
+                <div class="w-8 h-8 bg-gray-300 text-gray-500 rounded-full flex items-center justify-center text-sm font-semibold">3</div>
+                <span class="text-sm font-medium text-gray-500">Results</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="p-8">
+          <!-- File Upload Area -->
+          <div class="mb-8">
+            <label class="block text-sm font-medium text-gray-700 mb-4">Resume File</label>
+            <div 
+              id="drop-area" 
+              class="relative border-2 border-dashed border-gray-300 rounded-xl p-12 text-center hover:border-primary-400 transition-colors duration-200 cursor-pointer group"
+            >
+              <div class="space-y-4">
+                <div class="mx-auto w-16 h-16 bg-primary-100 rounded-full flex items-center justify-center group-hover:bg-primary-200 transition-colors">
+                  <svg class="w-8 h-8 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M9 19l3 3m0 0l3-3m-3 3V10"></path>
+                  </svg>
+                </div>
+                <div>
+                  <p class="text-lg font-semibold text-gray-900 mb-2">
+                    Drop your resume here, or 
+                    <span id="browse-text" class="text-primary-600 hover:text-primary-700 cursor-pointer">browse files</span>
+                  </p>
+                  <p class="text-sm text-gray-500">Supports PDF, DOC, DOCX, TXT files up to 10MB</p>
+                </div>
+                
+                <!-- Alternative Options -->
+                <div class="flex items-center justify-center space-x-4 pt-4">
+                  <div class="h-px bg-gray-300 flex-1"></div>
+                  <span class="text-sm text-gray-500 px-3">or</span>
+                  <div class="h-px bg-gray-300 flex-1"></div>
+                </div>
+                
+                <button 
+                  id="paste-text-btn"
+                  class="bg-gray-100 hover:bg-gray-200 text-gray-700 px-6 py-3 rounded-lg font-medium transition-colors duration-200 flex items-center space-x-2 mx-auto"
+                >
+                  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path>
+                  </svg>
+                  <span>Paste Resume Text</span>
+                </button>
+              </div>
+              
+              <!-- Upload Status -->
+              <div id="upload-status" class="hidden mt-4 p-4 bg-green-50 border border-green-200 rounded-lg">
+                <div class="flex items-center space-x-3">
+                  <svg class="w-5 h-5 text-green-600" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+                  </svg>
+                  <span class="text-sm font-medium text-green-800" id="upload-message">Resume uploaded successfully!</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Job Description (Optional) -->
+          <div class="mb-8">
+            <label for="job-description" class="block text-sm font-medium text-gray-700 mb-4">
+              Job Description 
+              <span class="text-gray-500 font-normal">- For more targeted analysis</span>
+            </label>
+            <textarea
+              id="job-description"
+              placeholder="Paste the job description here to get tailored feedback on how well your resume matches the role requirements..."
+              class="w-full h-32 px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 resize-none transition-colors duration-200"
+            ></textarea>
+          </div>
+
+          <!-- Analysis Options -->
+          <div class="mb-8">
+            <label class="block text-sm font-medium text-gray-700 mb-4">Analysis Options</label>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <label class="flex items-center space-x-3 p-4 border border-gray-200 rounded-lg cursor-pointer hover:bg-gray-50 transition-colors">
+                <input type="checkbox" checked class="w-4 h-4 text-primary-600 border-gray-300 rounded focus:ring-primary-500">
+                <div>
+                  <div class="text-sm font-medium text-gray-900">ATS Optimization</div>
+                  <div class="text-xs text-gray-500">Check compatibility with Applicant Tracking Systems</div>
+                </div>
+              </label>
+              
+              <label class="flex items-center space-x-3 p-4 border border-gray-200 rounded-lg cursor-pointer hover:bg-gray-50 transition-colors">
+                <input type="checkbox" checked class="w-4 h-4 text-primary-600 border-gray-300 rounded focus:ring-primary-500">
+                <div>
+                  <div class="text-sm font-medium text-gray-900">Content Analysis</div>
+                  <div class="text-xs text-gray-500">Analyze content quality and structure</div>
+                </div>
+              </label>
+              
+              <label class="flex items-center space-x-3 p-4 border border-gray-200 rounded-lg cursor-pointer hover:bg-gray-50 transition-colors">
+                <input type="checkbox" checked class="w-4 h-4 text-primary-600 border-gray-300 rounded focus:ring-primary-500">
+                <div>
+                  <div class="text-sm font-medium text-gray-900">Skills Gap Analysis</div>
+                  <div class="text-xs text-gray-500">Identify missing skills and keywords</div>
+                </div>
+              </label>
+              
+              <label class="flex items-center space-x-3 p-4 border border-gray-200 rounded-lg cursor-pointer hover:bg-gray-50 transition-colors">
+                <input type="checkbox" class="w-4 h-4 text-primary-600 border-gray-300 rounded focus:ring-primary-500">
+                <div>
+                  <div class="text-sm font-medium text-gray-900">Industry Benchmarking</div>
+                  <div class="text-xs text-gray-500">Compare against industry standards</div>
+                </div>
+              </label>
+            </div>
+          </div>
+
+          <!-- Action Buttons -->
+          <div class="flex flex-col sm:flex-row gap-4 justify-between items-center pt-6 border-t border-gray-200">
+            <div class="text-sm text-gray-500">
+              <svg class="w-4 h-4 inline mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
+              </svg>
+              Your data is secure and private
+            </div>
+            
+            <div class="flex space-x-4">
+              <button class="px-6 py-3 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 font-medium transition-colors duration-200">
+                Clear All
+              </button>
+              <button 
+                id="analyze-resume-btn"
+                class="px-8 py-3 bg-primary-600 hover:bg-primary-700 text-white rounded-lg font-semibold transition-all duration-200 hover:shadow-lg hover:scale-105 flex items-center space-x-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                disabled
+              >
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                </svg>
+                <span>Analyze Resume</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Features Preview -->
+      <div class="mt-16 grid md:grid-cols-3 gap-8">
+        <div class="text-center">
+          <div class="w-12 h-12 bg-primary-100 rounded-xl flex items-center justify-center mx-auto mb-4">
+            <svg class="w-6 h-6 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+            </svg>
+          </div>
+          <h3 class="text-lg font-semibold text-gray-900 mb-2">Instant Analysis</h3>
+          <p class="text-gray-600">Get comprehensive feedback in under 30 seconds</p>
+        </div>
+        
+        <div class="text-center">
+          <div class="w-12 h-12 bg-primary-100 rounded-xl flex items-center justify-center mx-auto mb-4">
+            <svg class="w-6 h-6 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+          </div>
+          <h3 class="text-lg font-semibold text-gray-900 mb-2">ATS Optimized</h3>
+          <p class="text-gray-600">Ensure your resume passes applicant tracking systems</p>
+        </div>
+        
+        <div class="text-center">
+          <div class="w-12 h-12 bg-primary-100 rounded-xl flex items-center justify-center mx-auto mb-4">
+            <svg class="w-6 h-6 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
+            </svg>
+          </div>
+          <h3 class="text-lg font-semibold text-gray-900 mb-2">100% Private</h3>
+          <p class="text-gray-600">Your resume data is never stored or shared</p>
+        </div>
+      </div>
+    </main>
+
+    <!-- Loading Modal -->
+    <div id="loading-modal" class="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center hidden">
+      <div class="bg-white rounded-2xl p-8 max-w-md mx-4 text-center">
+        <div class="animate-spin w-12 h-12 border-4 border-primary-200 border-t-primary-600 rounded-full mx-auto mb-4"></div>
+        <h3 class="text-lg font-semibold text-gray-900 mb-2">Analyzing Your Resume</h3>
+        <p class="text-gray-600">Our AI is reviewing your resume and providing detailed feedback...</p>
+      </div>
+    </div>
+  </body>
+</html>
