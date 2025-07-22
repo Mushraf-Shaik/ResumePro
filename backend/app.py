@@ -228,5 +228,8 @@ if __name__ == '__main__':
     # Get port from environment variable or use default
     port = int(os.environ.get('PORT', 5000))
     
+    # Check if we're in production
+    is_production = os.environ.get('FLASK_ENV') == 'production'
+    
     # Run the app
-    app.run(host='0.0.0.0', port=port, debug=True)
+    app.run(host='0.0.0.0', port=port, debug=not is_production)
