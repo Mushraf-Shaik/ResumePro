@@ -1,3 +1,15 @@
+---
+title: ResumePro - AI Resume Analyzer
+emoji: 🚀
+colorFrom: blue
+colorTo: purple
+sdk: docker
+app_port: 7860
+app_file: app.py
+pinned: false
+license: mit
+---
+
 # ResumePro - AI Resume Analyzer 🚀
 
 A sophisticated AI-powered resume analyzer that provides comprehensive ATS compatibility scoring, keyword matching, and actionable feedback to help job seekers optimize their resumes for better job application success.

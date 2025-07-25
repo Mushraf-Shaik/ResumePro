@@ -1,0 +1,12 @@
+{
+  "name": "resumepro",
+  "version": "1.0.0",
+  "description": "AI-powered resume analysis application",
+  "main": "index.js",
+  "scripts": {
+    "build": "echo 'No build step required'",
+    "start": "cd backend && python app.py"
+  },
+  "dependencies": {},
+  "devDependencies": {}
+}
